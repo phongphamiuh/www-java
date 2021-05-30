@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">SpringBootThymeleaf</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+<link rel="stylesheet" th:href="@{/resources/bootstrap-4.0.0-dist/css/bootstrap.min.css}">
+ <script th:src="@{/resources/bootstrap-4.0.0-dist/js/jquery-3.6.0.min.js}"></script>
+ <script th:src="@{/resources/bootstrap-4.0.0-dist/js/bootstrap.min.js}"></script>
+ <link rel="stylesheet" type="text/css" th:href="@{/resources/styles/Style_TrangChu.css}"/>
+ <link rel="stylesheet" type="text/css" th:href="@{/resources/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+<style>
+
+</style>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-light sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-branch" th:href="@{/}">
+                <img th:src="@{/resources/images/logo.png}" height="40">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}"> HOME </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            SẢN PHẨM
+                        </a>
+                        <ul id="push" class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                           <!--  <li th:each="category : ${categories}">
+                            	<a class="dropdown-item" th:text="${category.name}" 
+                            	th:href="@{'/products?page=1&categoryName=' + ${category.name} + '&sortField=onSalePrice&sortDir=lowest' }" >Máy Quạt</a>
+                            </li>  -->
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> SALE </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> GIỚI THIỆU </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> LIÊN HỆ </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ml-auto">
+                	<th:block sec:authorize="isAuthenticated()">
+                	 	<li class="nav-item">
+                        	<a class="nav-link" th:href="@{/admin/product?page=1&categoryName=Máy quạt&sortField=onSalePrice&sortDir=lowest}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Quản lý </a>
+                   		</li>
+                		 <li class="nav-item">
+                        	<a class="nav-link" th:href="@{/logout}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Đăng xuất </a>
+                   		</li>
+                	</th:block>
+                	<th:block sec:authorize="!isAuthenticated()">
+                		 <li class="nav-item">
+                        	<a class="nav-link" th:href="@{/login}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Đăng nhập </a>
+                    	</li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" th:href="@{/user/registration}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Đăng Ký </a>
+	                    </li>
+                	</th:block>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cart}"><i class="fa fa-fw fa-shopping-cart"></i> Giỏ hàng </a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+	<div class="container">
+		<div class="content"> 
+			<th:block layout:fragment="content">
+			<!-- Your Page Content Here -->
+			</th:block>
+		</div>
+	</div>
+	
+   <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h6>Giới Thiệu</h6>
+          <p class="text-justify">Easy đã và đang nổ lực hết mình nhằm mang lại sự tin tưởng tuyệt đối cho khách hàng. 
+              Đặt ra sứ mệnh, “SỰ TIỆN ÍCH CỦA KHÁCH HÀNG LÀ NỀN TẢNG CHO SỰ TỒN TẠI VÀ PHÁT TRIỂN”, Easy luôn hướng 
+              đến sự hoàn thiện trong công tác chăm sóc và phục vụ khách hàng tốt nhất. </p>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+          <h6>Sản Phẩm</h6>
+          <ul class="footer-links">
+            <li><a href="#">Máy Quạt</a></li>
+            <li><a href="#">Tivi</a></li>
+            <li><a href="#">Tủ Lạnh</a></li>
+            <li><a href="#">Máy Điều Hòa</a></li>
+            <li><a href="#">Máy Giặt</a></li>
+            <li><a href="#">Máy Hút Bụi _ Máy Lau Sàn</a></li>
+          </ul>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+          <h6>Links</h6>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Sản Phẩm</a></li>
+            <li><a href="#">Giới Thiệu</a></li>
+            <li><a href="#">Liên Hệ</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-6 col-xs-12">
+          <p class="copyright-text">Copyright &copy; 2021 Easy. All Rights Reserved  
+          </p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+<th:block layout:fragment="script"></th:block>
+</body>
+
+<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/sweetalert/2.1.0/sweetalert.min.js}"></script>
+
+<script>
+	$( document ).ready(function() {
+		// DO GET
+		function ajaxGet(){
+			$.ajax({
+				type : "GET",
+				dataType: "json",
+				url : "http://localhost:8080/ecommerce_project/categories",
+				success: function(result){
+					console.log(result);
+					$.each(result, function(i, customer){
+						console.log(customer.name);
+						th:href="@{'/products?page=1&categoryName=' + ${category.name} + '&sortField=onSalePrice&sortDir=lowest' }"
+						$('#push')
+						.append('<li><a class=\'dropdown-item\' href=\'/ecommerce_project/products?page=1&categoryName='+customer.name+'&sortField=onSalePrice&sortDir=lowest\' >'+customer.name+'</a></li>');
+					});
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});	
+		}
+		ajaxGet();
+	})
+</script>
+</html>

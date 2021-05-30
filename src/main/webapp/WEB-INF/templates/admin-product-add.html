@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="admin-layout">
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Sản Phẩm</title>
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <link type="text/css" rel="stylesheet" href="http://example.com/image-uploader.min.css">
+  <!-- add product -->
+  <link rel="stylesheet" type="text/css" th:href="@{/resources/assets/plugins/image-uploader.min.css}">
+  <style>
+  	.error-message{
+  	color:red;
+  	width:100%;
+  	height:100%;
+  	}
+  </style>
+</head>
+  <body>
+  	<th:block layout:fragment="content-admin">
+		   <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>Thêm Sản Phẩm</h2>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/admin/product}" th:object="${product}" method="post" enctype="multipart/form-data">
+                                <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
+                                    <label for="exampleFormControlInput1">Tên Sản Phẩm</label>
+                                    <input type="text" class="form-control" id="name" 
+                                    	th:field="*{name}" placeholder="Nhập tên sản phẩm">
+                                    <p class="error-message"
+										th:each="error: ${#fields.errors('name')}"
+										th:text="${error}">Validation error</p>
+                                </div>
+                                <div class="row">
+                                	<div class="col-md-4">
+                                		<div class="form-group">
+		                                    <label for="exampleFormControlPassword">Giá Sản Phẩm</label>
+		                                    <div class="input-group">
+		                                      <input type="text" class="form-control"  th:field="*{price}"
+		                                       aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá sản phẩm">
+		                                      <div class="input-group-append">
+		                                        <span class="input-group-text">VND</span>
+		                                      </div>
+		                                    </div>
+		                                    <p class="error-message"
+												th:each="error : ${#fields.errors('price')}" th:text="${error}">Validation
+												error</p>
+                                		</div>
+                                	</div>
+                                	<div class="col-md-4">
+                                		<div class="form-group">
+		                                    <label for="exampleFormControlPassword">Giá giảm</label>
+		                                    <div class="input-group">
+		                                      <input type="text" class="form-control"  th:field="*{onSalePrice}"
+		                                       aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá giảm">
+		                                      <div class="input-group-append">
+		                                        <span class="input-group-text">VND</span>
+		                                      </div>
+		                                    </div>
+                                		</div>
+                                	</div>
+                                	<div class="col-md-4">
+                                		<div class="form-group">
+		                                    <label for="exampleFormControlPassword">Giá ship</label>
+		                                    <div class="input-group">
+		                                      <input type="text" class="form-control"  th:field="*{cargoPrice}"
+		                                       aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá ship">
+		                                      <div class="input-group-append">
+		                                        <span class="input-group-text">VND</span>
+		                                      </div>
+		                                    </div>
+                                		</div>
+                                	</div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Số Lượng</label>
+                                  <input type="text" class="form-control" id="stock" th:field="*{stock}"
+                                  placeholder="Nhập số lượng sản phẩm">
+                              	</div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Tên Hãng Sản Xuất</label>
+                                    <input type="text" class="form-control" id="brand" th:field="*{brand}"
+                                    placeholder="Nhập tên hãng sản xuất">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect12">Loại Sản Phẩm</label>
+                                    <select class="form-control" id="categoryName" th:field="*{categoryName}">
+                                        <option value="Tủ lạnh">Tủ Lạnh</option>
+                                        <option value="Máy giặt">Máy Giặt</option>
+                                        <option value="Máy quạt">Máy Quạt</option>
+                                        <option value="Tivi">Tivi</option>
+                                        <option value="Máy điều hòa">Máy Điều Hòa</option>
+                                        <option value="Máy hút bụi">Máy Hút Bụi</option>
+                                         <option value="Máy lau sàn">Máy Lau Sàn</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Mô Tả Sản Phẩm</label>
+                                    <textarea class="form-control" id="description" 
+                                    th:field="*{description}" rows="10"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Bảo Hành Sản Phẩm</label>
+                                    <textarea class="form-control" id="" rows="3"></textarea>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="exampleFormControlFile1">Example file input</label>
+                                    <div class="input-images-1" style="padding-top: .5rem;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Example file input</label>
+                                    <input class="form-control" type="file" id="image" name="image">
+                                </div> 
+                                <div class="form-footer pt-4 pt-5 mt-4 border-top">
+                                    <button type="submit" class="btn btn-primary btn-default">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                 
+                </div>
+            </div>	
+          </div>
+	</th:block>
+  </body>
+  
+ <script type="text/javascript" th:src="@{/resources/assets/plugins/image-uploader.min.js}"></script>
+</html>

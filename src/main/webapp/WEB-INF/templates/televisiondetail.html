@@ -1,0 +1,32 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+      
+    <head>
+        <title>Home</title>
+    </head>
+    
+    <body>
+    	<th:block layout:fragment="content">
+    		<div class="container">
+    			<div class="row">
+    				 <div>
+    				 	 <th:block th:text="${detail.name}"></th:block>
+    				 	 <p th:text="${detail.size}"></p>
+    				 	 <div class="order">
+			                <input class="car" type="button" th:onclick="'saveAndGoCart('+${detail.productId}+')'" value="Mua sắm ngay bây giờ"/>
+			                <input class="car" type="button" th:onclick="'saveToCart('+${detail.productId}+')'" value="thêm vào giỏ hàng"/>
+            			</div>
+    				 </div>
+    			</div>
+    		</div>
+    		<script th:src="@{/resources/script/detail.js}"></script>
+    	</th:block>
+    </body>
+    <script th:src="@{/resources/script/detail.js}"></script>
+</html>

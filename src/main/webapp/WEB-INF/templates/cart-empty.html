@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+      
+    <head>
+        <title>Cart</title>
+         <link rel="stylesheet" type="text/css" th:href="@{/resources/styles/Style_Cart.css}"/>
+    </head>
+    <body>
+    	<div class="content"> 
+			<th:block layout:fragment="content">
+				 <!-- danh sach san pham -->
+    			 <div class="container-fluid mt-100">
+			        <div class="row">
+			            <div class="col-md-12">
+			                <div class="card">
+			                    <div class="card-body cart">
+			                        <div class="col-sm-12 empty-cart-cls text-center"> <img th:src="@{/resources/images/cart.png}" width="130" height="130" class="img-fluid mb-4 mr-3">
+			                            <h3><strong>Giỏ Hàng Trống</strong></h3>
+			                            <h4>Không có sản phẩm nào trong giỏ hàng của bạn.</h4> <a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Tiếp tục mua sắm</a>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+    			</div>
+			</th:block>
+		</div>
+    </body>
+</html>

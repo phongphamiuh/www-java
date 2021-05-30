@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="admin-layout">
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Sản Phẩm</title>
+</head>
+  <body>
+  	<th:block layout:fragment="content-admin">
+		   <div class="content">
+            <div class="row">
+              <div class="col-12">
+                <!-- Recent Order Table -->
+                <div class="card card-table-border-none" id="recent-orders">
+                  <div class="card-header justify-content-between">
+                    <h2>Danh Sách Sản Phẩm</h2>
+                  </div>
+                  <div class="card-body pt-0 pb-5">
+                    <form th:action="@{/admin/product}"  method="get">
+                      <div class="row">
+                        <div class="col-lg-10">
+                          <select class="form-control" id="categotyName" name="categoryName">
+                            <option th:each="category:${categories}"
+                            		th:value="${category.name}"
+                            		th:utext="${category.name}">
+                            Tủ Lạnh
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-primary">Áp Dụng</button>
+                        </div>
+                      </div>
+                    </form>
+                    
+                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>Product ID</th>
+                          <th>Product Name</th>
+                          <th class="d-none d-md-table-cell">Price</th>
+                          <th class="d-none d-md-table-cell">Units In Stock</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <th:block th:each="product : ${products}">
+                       	<tr>
+                          <td th:text="${product.id}">24541</td>
+                          <td >
+                            <p th:text="${product.name}" class="text-dark" href=""> Coach Swagger</p>
+                          </td>
+                          <td th:text="${product.price}" class="d-none d-md-table-cell" >$230</td>
+                          <td th:text="${product.stock}" class="d-none d-md-table-cell">2</td>
+                          <td >
+                            <span class="badge badge-success">In Stock</span>
+                          </td>
+                          <td class="text-right">
+                            <div class="dropdown show d-inline-block widget-dropdown">
+                              <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
+                                <li class="dropdown-item">
+                                  <a th:href="@{/admin/product/{id}(id=${product.id})}">View</a>
+                                </li>
+                                <li class="dropdown-item">
+                                  <a th:href="@{/admin/product/delete/{id}/{categoryName}(id=${product.id},categoryName=${categoryName})}">Remove</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                       </th:block>
+                      </tbody>
+                    </table>
+                    <!-- pagination -->
+                    <div class="col-12 pages">
+	                        <nav aria-label="Pagination" th:if="${products.totalPages gt 0}">
+						    <ul class="pagination justify-content-center font-weight-bold">
+						        <li class="page-item" th:classappend="${products.number eq 0} ? 'disabled'">
+						            <a class="page-link"
+						               th:href="@{/admin/product?page={id}(id=${products.number lt 2 ? 1 : products.number},categoryName=${categoryName},sortField=${sortField},sortDir=${sortDir})}"
+						               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+						                <span aria-hidden="true">&laquo;</span>
+						            </a>
+						        </li>
+						        
+						        <li class="page-item" th:classappend="${i eq products.number + 1} ? 'active'"
+						            th:each="i : ${#numbers.sequence( 1, products.totalPages, 1)}">
+						            <a class="page-link" th:href="@{'/admin/product?page=' + ${i}} +'&categoryName='+ ${categoryName} +'&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}" th:text="${i}"
+						               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+						        </li>
+						      
+						        <li class="page-item" th:classappend="${products.number + 1 eq products.totalPages} ? 'disabled'">
+						            <a class="page-link"
+						              th:href="@{${'/admin/product'}(page=${products.number + 2},categoryName=${categoryName},sortField=${sortField},sortDir=${sortDir})}"
+						               aria-label="Next" title="Next Page" data-toggle="tooltip">
+						                <span aria-hidden="true">&raquo;</span>
+						            </a>
+						        </li>
+						    </ul>
+						</nav>
+			         </div>
+			          <!-- pagination -->
+                  </div>
+                </div>
+				</div>
+            </div>	
+          </div>
+	</th:block>
+  </body>
+  
+ <th:block layout:fragment="script">
+  	<script>
+	 $( document ).ready(function() {
+			console.log('======================================');
+	})
+  </script>
+</th:block>
+</html>

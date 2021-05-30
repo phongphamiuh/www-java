@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+      
+    <head>
+        <title>Product List</title>
+         <link rel="stylesheet" type="text/css" th:href="@{/resources/styles/Style_ListSanPham.css}"/>
+    </head>
+    <body>
+   		
+    	<div class="content"> 
+			<th:block layout:fragment="content">
+				<!--Link-->
+			    <div class="container links">
+			        <div class="row">
+			            <nav>
+			                &nbsp;
+			                <a  href="#">Home</a>&nbsp;/&nbsp;
+			                Tủ Lạnh
+			            </nav>
+			        </div>
+			    </div>
+				<!-- Content -->
+			    <div class="container content">
+			        <div class="row">
+			            <!-- Danh muc loai san pham -->
+			            <div class="col-12 col-sm-3">
+			                <div class="card bg-light mb-3">
+			                    <div class="card-header bg-dark text-white text-uppercase"><i class="fa fa-list"></i> Danh mục sản phẩm</div>
+			                    <ul class="list-group category_block">
+			                        <li class="list-group-item"><a href="#">Máy Quạt</a></li>
+			                        <li class="list-group-item"><a href="#">TiVi</a></li>
+			                        <li class="list-group-item active"><a href="#">Tủ Lạnh</a></li>
+			                        <li class="list-group-item"><a href="#">Máy Điều Hòa</a></li>
+			                        <li class="list-group-item"><a href="#">Máy Giặt</a></li>
+			                        <li class="list-group-item"><a href="#">Máy hút bụi - Máy lau sàn </a></li>
+			                    </ul>
+			                </div>
+			                <div class="card bg-light mb-3">
+			                    <div class="card-header bg-dark text-white text-uppercase"> Giá</div>
+			                    <div class="container price-filter">
+			                        <form>
+			                            <div class="form-check mt-2">
+			                                <input class="form-check-input" type="radio" name="priceFilter" id="price1"/>
+			                                <label class="form-check-label" for="flexRadioDefault1"> Dưới 2.000.000 </label>
+			                            </div>
+			                            <div class="form-check">
+			                                <input class="form-check-input" type="radio" name="priceFilter" id="price2"/>
+			                                <label class="form-check-label" for="flexRadioDefault2"> Từ 2.000.000 đến 5.000.000 </label>
+			                            </div>
+			                            <div class="form-check mb-3">
+			                                <input class="form-check-input" type="radio" name="priceFilter" id="price3"/>
+			                                <label class="form-check-label" for="flexRadioDefault2"> Trên 5.000.000 </label>
+			                            </div>
+			                            <input type="submit" value="Áp dụng" class="mb-3 btn-class">
+			                        </form>
+			                    </div>
+			                </div>
+			            </div>
+			            
+			            <div class="col">
+			                <!-- Sap xep san pham -->
+			                <div class="row sort">
+			                    <div class="col-md-4 mb-2 mt-2 ml-auto">
+			                        <select class="browser-default custom-select">
+			                            <option value="1">Sắp xếp theo giá tăng dần</option>
+			                            <option value="2">Sắp xếp theo giá giảm dần</option>
+			                        </select>
+			                    </div>
+			                    
+			                </div>
+			                <!-- Danh sach san pham -->
+			                <div class="products row">
+			                  <th:block th:each="product : ${products}">
+								<div class="col-md-3 col-sm-6">
+					                <div class="product-grid">
+					                    <div class="product-image">
+					                        <a th:href="@{/products/{id}(id=${product.id})}">
+					                            <img class="pic-1" th:src="@{${'/resources/images/products/' + product.id + '.png'}}">
+					                        </a>
+					                    </div>
+					                    <div class="product-content">
+					                        <h3 class="title"><a href="#" th:text="${product.name}"></a></h3>
+					                        <div class="price" >
+					                        	<p th:text="${product.onSalePrice}" th:remove="tag">11.000.000 VND</p>
+					                            <span th:text="${product.price}">11.500.000 VND</span>
+					                        </div>
+					                    </div>
+					                    <ul class="social">
+					                        <li><a th:href="@{/products/{id}(id=${product.id})}" data-tip="Quick View" ><i class="fa fa-search"></i></a></li>
+					                        <li><a th:href="@{${'/cart/add?id=' + product.id + '&amount=1'}}" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+					                    </ul>
+					                </div>
+					            </div>
+  							 </th:block>
+			                    
+			                    <!-- Phan trang -->
+			                   <div class="col-12 pages">
+			                        <nav aria-label="Pagination" th:if="${products.totalPages gt 0}">
+								    <ul class="pagination justify-content-center font-weight-bold">
+								        <li class="page-item" th:classappend="${products.number eq 0} ? 'disabled'">
+								            <a class="page-link"
+								               th:href="@{/products?page={id}(id=${products.number lt 2 ? 1 : products.number},categoryName=${categoryName},sortField=${sortField},sortDir=${sortDir})}"
+								               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+								                <span aria-hidden="true">&laquo;</span>
+								            </a>
+								        </li>
+								        
+								        <li class="page-item" th:classappend="${i eq products.number + 1} ? 'active'"
+								            th:each="i : ${#numbers.sequence( 1, products.totalPages, 1)}">
+								            <a class="page-link" th:href="@{'/products?page=' + ${i}} +'&categoryName='+ ${categoryName} +'&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}" th:text="${i}"
+								               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+								        </li>
+								      
+								        <li class="page-item" th:classappend="${products.number + 1 eq products.totalPages} ? 'disabled'">
+								            <a class="page-link"
+								              th:href="@{${'/products'}(page=${products.number + 2},categoryName=${categoryName},sortField=${sortField},sortDir=${sortDir})}"
+								               aria-label="Next" title="Next Page" data-toggle="tooltip">
+								                <span aria-hidden="true">&raquo;</span>
+								            </a>
+								        </li>
+								    </ul>
+								</nav>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</th:block>
+		</div>
+    </body>
+</html>

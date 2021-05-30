@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+      
+    <head>
+        <title>Home</title>
+    </head>
+    
+    <body>
+    	<div layout:fragment="content">
+    		<div class="container">
+    			<div class="row">
+    				 <div class="col-md-4" th:each="television: ${televisions}">
+    				 	<a th:href="@{'/television/detail/'+${television.sku}}">
+	    				 	<div class="card" style="width: 18rem;">
+							  	<img class="card-img-top" src="..." alt="Card image cap">
+							  	<div class="card-body">
+							  		<h5 class="card-title" th:text="${television.sku}">Card title</h5>
+								    <h5 class="card-title" th:text="${television.name}">Card title</h5>
+								    <p class="card-text"><span th:text="${television.size}"></span><span th:text="${television.resolution}"></span></p>
+							  	</div>
+							</div>
+    				 	</a>
+    				 </div>
+    			</div>
+    		</div>
+    	</div>
+    </body>
+    
+</html>

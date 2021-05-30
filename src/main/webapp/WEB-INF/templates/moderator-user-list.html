@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="admin-layout">
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Sản Phẩm</title>
+</head>
+  <body>
+  	<th:block layout:fragment="content-admin">
+		   <div class="content">
+            <div class="row">
+              <div class="col-12">
+                <!-- Recent Order Table -->
+                <div class="card card-table-border-none" id="recent-orders">
+                  <div class="card-header justify-content-between">
+                    <h2>Quản lý tài khoản</h2>
+                  </div>
+                  <div class="card-body pt-0 pb-5">
+                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Email</th>
+                          <th>Customer Name</th>
+                          <th class="d-none d-md-table-cell">Created</th>
+                          <th class="d-none d-md-table-cell">Vai trò</th>
+                          <th class="d-none d-md-table-cell">Số điện thoại</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       <th:block th:each="user : ${users}">
+                       	<tr>
+                          <td th:text="${user.id}">24541</td>
+                          <td >
+                            <p class="text-dark" href="" th:text="${user.email}"> Coach Swagger</p>
+                          </td>
+                          <td >
+                            <p class="text-dark" href="" th:text="${user.name}"> Coach Swagger</p>
+                          </td>
+                          <td class="d-none d-md-table-cell" th:text="${user.registrationDate}">Oct 20, 2018</td>
+                          <td class="d-none d-md-table-cell">
+                          	<th:block th:each="role :${user.roles}">
+                          		<span th:text="${role.description}"></span>
+                          	</th:block>
+                          </td>
+                          <td class="d-none d-md-table-cell" th:text="${user.phone}"></td>
+                          <td class="text-right">
+                            <div class="dropdown show d-inline-block widget-dropdown">
+                              <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
+                                <li class="dropdown-item">
+                                  <a href="#">View</a>
+                                </li>
+                                <li class="dropdown-item">
+                                  <a href="#">Remove</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                       </th:block>
+                      </tbody>
+                    </table>
+                    <!-- pagination -->
+                    <div class="col-12 pages">
+	                        <nav aria-label="Pagination" th:if="${users.totalPages gt 0}">
+						    <ul class="pagination justify-content-center font-weight-bold">
+						        <li class="page-item" th:classappend="${users.number eq 0} ? 'disabled'">
+						            <a class="page-link"
+						               th:href="@{/moderator/user?page={id}(id=${users.number lt 2 ? 1 : users.number},sortField=${sortField},sortDir=${sortDir})}"
+						               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+						                <span aria-hidden="true">&laquo;</span>
+						            </a>
+						        </li>
+						        
+						        <li class="page-item" th:classappend="${i eq users.number + 1} ? 'active'"
+						            th:each="i : ${#numbers.sequence( 1, users.totalPages, 1)}">
+						            <a class="page-link" th:href="@{'/mpderator/user?page=' + ${i}} +'&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}" th:text="${i}"
+						               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+						        </li>
+						      
+						        <li class="page-item" th:classappend="${users.number + 1 eq users.totalPages} ? 'disabled'">
+						            <a class="page-link"
+						              th:href="@{${'/moderator/user'}(page=${users.number + 2},sortField=${sortField},sortDir=${sortDir})}"
+						               aria-label="Next" title="Next Page" data-toggle="tooltip">
+						                <span aria-hidden="true">&raquo;</span>
+						            </a>
+						        </li>
+						    </ul>
+						</nav>
+			         </div>
+			          <!-- pagination -->
+                  </div>
+                </div>
+				</div>
+            </div>	
+          </div>
+	</th:block>
+  </body>
+  
+ <th:block layout:fragment="script">
+  	<script>
+	 $( document ).ready(function() {
+			console.log('======================================');
+	})
+  </script>
+</th:block>
+</html>

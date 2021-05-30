@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+      
+    <head>
+        <title>Cart</title>
+         <link rel="stylesheet" type="text/css" th:href="@{/resources/styles/Style_Cart.css}"/>
+    </head>
+    <body>
+    	<div class="content"> 
+			<th:block layout:fragment="content">
+				 <!-- danh sach san pham -->
+    <main class="page">
+        <section class="shopping-cart dark">
+            <div class="container">
+               <div class="block-heading">
+                 <h2>GIỎ HÀNG</h2>
+               </div>
+               <div class="content">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="items">
+                                <th:block th:each="item : ${cart.cartItems}">
+	                               	<div class="product">
+	                                    <div class="row">
+	                                        <div class="col-md-3">
+	                                             <img class="img-fluid mx-auto d-block image" th:src="@{${'/resources/images/products/' + item.productId + '.png'}}" >
+	                                        </div>
+	                                        <div class="col-md-8">
+	                                            <div class="info">
+	                                                <div class="row">
+	                                                    <div class="col-md-5 product-name">
+	                                                        <div class="product-name">
+	                                                            <a href="#" th:text="${item.name}">Eureka Bottle Cooler 9cu.Ft. (220W) EBC 90S</a>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="col-md-3 quantity">
+	                                                        <label for="quantity">Quantity:</label>
+	                                                        <a class="btn btn-primary" th:href="@{'/cart/decrement?id=' + ${item.id} + '&amount=1' }">-</a>
+	                                                        <span th:text="${item.amount}">1</span>
+															<a class="btn btn-primary" th:href="@{'/cart/increment?id=' + ${item.id} + '&amount=1' }">+</a>
+	                                                    </div>
+	                                                    <div class="col-md-4 price">
+	                                                        <span th:text="${item.onSalePrice}">11,400,000 VND</span>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="remove">
+	                                    <p><a th:href="@{${'/cart/remove?id=' + item.id}}" class="text-muted"><i class="fa fa-trash"></i></a></p>
+	                                </div>
+	                                <hr>
+                               </th:block>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="summary">
+                                <h3>Summary</h3>
+                                <div class="summary-item"><span class="text">Tạm Tính</span><span th:text="${cart.totalCartPrice}" class="price">11,400,000 VND</span></div>
+                                <div class="summary-item"><span class="text">Giảm</span><span class="price">0 VND</span></div>
+                                <div class="summary-item"><span class="text">Shipping</span><span th:text="${cart.totalCargoPrice}" class="price">0 VND</span></div>
+                                <div class="summary-item"><span class="text">Thành Tiền</span><span th:text="${cart.totalPrice}" class="price">11,400,000 VND</span></div>
+                                <a type="button" class="btn btn-primary btn-lg btn-block" th:href="@{/order/checkout}">Tiến Hành Đặt Hàng</a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+       </section>
+   </main>
+			</th:block>
+		</div>
+    </body>
+</html>
