@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/resources/styles/Style_Checkout.css}"/>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+<div class="container links">
+       <div class="row">
+           <nav>
+               &nbsp;
+               <a  href="#">Home</a>&nbsp;/&nbsp;
+               <a  href="#">Tủ Lạnh</a>&nbsp;/&nbsp;
+               Eureka Bottle Cooler 9cu.Ft. (220W) EBC 905
+           </nav>
+
+       </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="invoice-wrapper rounded border bg-white col-md-12" style="padding: 20px">
+						<div class="d-flex justify-content-between">
+							<h2 class="text-dark font-weight-medium">Invoice #2365546</h2>
+							
+						</div>
+						<div class="row pt-5">
+							<div class="col-xl-3 col-lg-4">
+								<p class="text-dark mb-2">Thông tin khách hàng</p>
+								<address>
+									<br>Tên khách hàng: <span th:text="${order.shipName}"></span>
+									<br>Số điện thoại :<span th:text="${order.phone}"> </span>
+								</address>
+							</div>
+							<div class="col-xl-3 col-lg-4">
+								<p class="text-dark mb-2">Địa chỉ giao hàng</p>
+								<address>
+									<br><span th:text="${order.shipAddrees}"></span>
+								</address>
+							</div>
+							<div class="col-xl-3 col-lg-4">
+								<p class="text-dark mb-2">Chi Tiết đơn hàng</p>
+								<address>
+									Số hóa đơn:
+									<span class="text-dark" th:text="${order.id}">#2365546</span>
+									<br th:text="${order.createDate}">
+								</address>
+							</div>
+						</div>
+						<table class="table mt-3 table-striped table-responsive table-responsive-large" style="width:100%">
+							<thead>
+								<tr>
+									<th>Sản Phẩm</th>
+									<th>Số Lượng</th>
+									<th>Đơn Giá</th>
+									<th>Thành Tiền</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="detail : ${order.orderDetailList}">
+									<tr>
+										<td th:text="${detail.name}">Platinum Support</td>
+										<td th:text="${detail.amount}">1</td>
+										<td th:text="${detail.onSalePrice}">$3.999,00</td>
+										<td th:text="${detail.lineTotal}">$3.999,00</td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+						<div class="row justify-content-end">
+							<div class="col-lg-5 col-xl-4 col-xl-3 ml-sm-auto">
+								<ul class="list-unstyled mt-4">
+									<li class="pb-3 text-dark">Thành Tiền
+										<span class="d-inline-block float-right" th:text="${order.totalPrice}">$8.686,70</span>
+									</li>
+								</ul>
+							
+								<a th:href="@{/order/success/confirm?id={id}(id=${order.id})}" class="btn btn-block mt-2 btn-lg btn-success btn-pill"> Xác nhận đơn hàng</a>
+							</div>
+						</div>
+				</div>
+    </div>
+</div>
+</th:block>
+
+
+</body>
+</html>

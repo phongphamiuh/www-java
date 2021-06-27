@@ -18,5 +18,6 @@ public class OrderDetailDto {
     private Float onSalePrice;
 
     private Integer amount;
-
+    
+    private Float lineTotal;
 }

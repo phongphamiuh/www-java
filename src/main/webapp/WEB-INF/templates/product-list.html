@@ -17,9 +17,7 @@
 			    <div class="container links">
 			        <div class="row">
 			            <nav>
-			                &nbsp;
-			                <a  href="#">Home</a>&nbsp;/&nbsp;
-			                Tủ Lạnh
+			              Danh sách sản phẩm
 			            </nav>
 			        </div>
 			    </div>
@@ -31,12 +29,10 @@
 			                <div class="card bg-light mb-3">
 			                    <div class="card-header bg-dark text-white text-uppercase"><i class="fa fa-list"></i> Danh mục sản phẩm</div>
 			                    <ul class="list-group category_block">
-			                        <li class="list-group-item"><a href="#">Máy Quạt</a></li>
-			                        <li class="list-group-item"><a href="#">TiVi</a></li>
-			                        <li class="list-group-item active"><a href="#">Tủ Lạnh</a></li>
-			                        <li class="list-group-item"><a href="#">Máy Điều Hòa</a></li>
-			                        <li class="list-group-item"><a href="#">Máy Giặt</a></li>
-			                        <li class="list-group-item"><a href="#">Máy hút bụi - Máy lau sàn </a></li>
+				                     <li class="list-group-item" th:each="category : ${categories}">
+			                            	<a th:text="${category.name}" 
+			                            	th:href="@{'/products?page=1&categoryName=' + ${category.name} + '&sortField=onSalePrice&sortDir=lowest' }" >Máy Quạt</a>
+	                            	</li>
 			                    </ul>
 			                </div>
 			                <div class="card bg-light mb-3">

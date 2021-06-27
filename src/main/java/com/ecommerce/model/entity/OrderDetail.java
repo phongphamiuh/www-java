@@ -37,4 +37,6 @@ public class OrderDetail {
 	
     @Column(name = "amount")
     private Integer amount;
+    
+    
 }

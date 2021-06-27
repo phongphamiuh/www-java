@@ -64,8 +64,11 @@ public class UserServiceImpl implements UserService{
         }
 
         User user = userRepository.findByEmail(userName);
-        if (Objects.isNull(user)) {
-            throw new BadRequestException("User not found");
+//        if (Objects.isNull(user)) {
+//            throw new BadRequestException("User not found");
+//      }
+        if(user == null) {
+        	return null;
         }
         return user;
 	}

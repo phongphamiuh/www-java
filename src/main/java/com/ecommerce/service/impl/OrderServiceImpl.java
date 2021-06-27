@@ -24,11 +24,13 @@ import com.ecommerce.model.entity.OrderDetail;
 import com.ecommerce.model.entity.Product;
 import com.ecommerce.model.entity.User;
 import com.ecommerce.model.request.OrderRequest;
+import com.ecommerce.model.response.CartSession;
 import com.ecommerce.model.response.OrderResponse;
 import com.ecommerce.repository.OrderRepository;
 import com.ecommerce.repository.StatusRepository;
 import com.ecommerce.service.CartService;
 import com.ecommerce.service.OrderService;
+import com.ecommerce.service.ProductService;
 import com.ecommerce.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -40,10 +42,10 @@ public class OrderServiceImpl implements OrderService{
 	private final UserService userService;
 	private final OrderRepository orderRepository;
 	private final OrderResponseConverter orderResponseConverter;
-	private final CartService cartService;
+//	private final CartService cartService;
 	private final OrderSpecification orderSpecification;
 	private final StatusRepository statusRepository;
-	
+	private final ProductService productService;
 //	@Override
 //    public Integer getAllOrdersCount() {
 //        User user = userService.getUser();
@@ -62,15 +64,15 @@ public class OrderServiceImpl implements OrderService{
 //    }
 
     @Override
-    public OrderResponse postOrder(OrderRequest orderRequest) {
+    public OrderResponse postOrder(OrderRequest orderRequest, CartSession cart) {
         User user = userService.getUser();
         String newStatus = "Đặt hàng";
-        Cart cart = user.getCart();
-        if (Objects.isNull(cart) || Objects.isNull(cart.getCartItemList())) {
+      //  Cart cart = user.getCart();
+        if (Objects.isNull(cart) || Objects.isNull(cart.getCartItems())) {
             throw new BadRequestException("Cart is not valid");
         }
 
-        if (cart.getCartItemList().stream().anyMatch(cartItem -> cartItem.getProduct().getStock() < cartItem.getAmount())) {
+        if (cart.getCartItems().stream().anyMatch(cartItem -> cartItem.getStock() < cartItem.getAmount())) {
             throw new BadRequestException("A product in your cart is out of stock.");
         }
        
@@ -89,11 +91,11 @@ public class OrderServiceImpl implements OrderService{
 
         saveOrder.setOrderDetailList(new ArrayList<>());
 
-        cart.getCartItemList().forEach(cartItem -> {
+        cart.getCartItems().forEach(cartItem -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setAmount(cartItem.getAmount());
             orderDetail.setOrder(saveOrder);
-            orderDetail.setProduct(cartItem.getProduct());
+            orderDetail.setProduct(productService.findById(cartItem.getProductId()));
             saveOrder.getOrderDetailList().add(orderDetail);
         });
 
@@ -101,7 +103,7 @@ public class OrderServiceImpl implements OrderService{
         saveOrder.setTotalCargoPrice(cart.getTotalCargoPrice());
         Order order = orderRepository.save(saveOrder);
         System.out.println("Order :"+order);
-        cartService.emptyCart();
+      //  cartService.emptyCart();
         return orderResponseConverter.apply(order);
     }
 
@@ -140,6 +142,12 @@ public class OrderServiceImpl implements OrderService{
       //  Pageable pageable = PageRequest.of(pageNo - 1, pageSize,Sort.by("onSalePrice").ascending());
        return orderRepository.findAll(combinations, pageRequest);
        
+	}
+
+	@Override
+	public OrderResponse getOrder(Long id) {
+		Order order= orderRepository.findById(id).orElseThrow(()->new BadRequestException("Order not found!"));
+		return orderResponseConverter.apply(order);
 	}
 
 }

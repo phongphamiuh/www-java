@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ecommerce.model.entity.Product;
+import com.ecommerce.model.entity.ProductCategory;
 import com.ecommerce.model.response.ProductResponse;
+import com.ecommerce.service.CategoryService;
 import com.ecommerce.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import lombok.AllArgsConstructor;
 public class ProductController {
 	
 	private final ProductService productService;
+	private final CategoryService categoryService;
 	
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
 	public String get(@PathVariable("id")Long id,Model model){
@@ -44,6 +47,7 @@ public class ProductController {
 		    int pageSize = 12;
 
 		    Page < Product > page = productService.findPaginated(pageNo, pageSize, sortField, sortDir,categoryName);
+		    List<ProductCategory> categories = categoryService.getAll();
 		    
 		    List < Product > productList = page.getContent();
 		    productList.forEach(product ->{
@@ -58,6 +62,7 @@ public class ProductController {
 		    model.addAttribute("sortField", sortField);
 		    model.addAttribute("sortDir", sortDir);
 		    model.addAttribute("categoryName",categoryName);
+		    model.addAttribute("categories", categories);
 //		    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		    
 		    model.addAttribute("products", page);

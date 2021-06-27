@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.headers().frameOptions().sameOrigin()
 			.and().authorizeRequests()
-				.antMatchers("/resources/**", "/webjars/**", "/assets/**","/products/**","/categories/**").permitAll()
+				.antMatchers("/resources/**", "/webjars/**", "/assets/**","/products/**","/categories/**","/cart/**").permitAll()
 				.antMatchers("/","/user/**").permitAll()
 				.antMatchers("/admin/**").hasAnyRole("ADMIN","MODERATOR")
 				.antMatchers("/moderator/**").hasRole("MODERATOR")

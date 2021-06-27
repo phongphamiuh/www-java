@@ -22,7 +22,8 @@ public class OrderResponseConverter implements Function<Order, OrderResponse>{
 		orderResponse.setPhone(order.getPhone());
 		orderResponse.setDistrict(order.getCity());
 		orderResponse.setDistrict(order.getDistrict());
-		  
+		orderResponse.setCreateDate(order.getCreateDate());
+		orderResponse.setTotalPrice(order.getTotalPrice());
 		orderResponse.setOrderDetailList(order.getOrderDetailList()
                 .stream()
                 .map(orderDetail -> OrderDetailDto
@@ -32,6 +33,8 @@ public class OrderResponseConverter implements Function<Order, OrderResponse>{
                         .cargoPrice(orderDetail.getProduct().getCargoPrice())
                         .onSalePrice(orderDetail.getProduct().getOnSalePrice())
                         .amount(orderDetail.getAmount())
+                        
+                        .lineTotal(orderDetail.getProduct().getOnSalePrice()*orderDetail.getAmount())
                         .build())
                 .collect(Collectors.toList()));
 		return orderResponse;

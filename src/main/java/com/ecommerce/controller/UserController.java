@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecommerce.converter.product.UserReposnseConverter;
+import com.ecommerce.model.entity.NotificationEmail;
 import com.ecommerce.model.entity.Product;
 import com.ecommerce.model.entity.User;
 import com.ecommerce.model.request.RegisterUserRequest;
 import com.ecommerce.service.UserService;
+import com.ecommerce.service.impl.MailService;
 
 import lombok.AllArgsConstructor;
 
@@ -38,7 +40,7 @@ public class UserController {
 	
 	private final UserService userService;
 	private final UserReposnseConverter userResponseConverter;
-	
+	private final MailService mailService;
 
 	@ModelAttribute("user")
 	public RegisterUserRequest userRegistrationDto() {
@@ -64,8 +66,11 @@ public class UserController {
         if (result.hasErrors()) {
             return "registration";
         }
-
         userService.save(registerUserRequest);
+        
+        mailService.sendMail(new NotificationEmail("Cảm ơn bạn đã đăng ký tài khoản", registerUserRequest.getEmail(),
+                "Cảm ơn bạn đã đăng ký tài khoản"
+        ));
         
         return "redirect:/user/registration?success";
     }

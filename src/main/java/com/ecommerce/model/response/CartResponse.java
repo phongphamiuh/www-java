@@ -12,4 +12,5 @@ public class CartResponse {
     private Float totalCargoPrice;
     private Float totalPrice;
     private List<CartItemDto> cartItems;
+    
 }

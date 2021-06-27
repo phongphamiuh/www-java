@@ -39,12 +39,23 @@
 	                                                    </div>
 	                                                    <div class="col-md-3 quantity">
 	                                                        <label for="quantity">Quantity:</label>
-	                                                        <a class="btn btn-primary" th:href="@{'/cart/decrement?id=' + ${item.id} + '&amount=1' }">-</a>
+	                                                        <!-- <a class="btn btn-primary" th:href="@{'/cart/decrement?id=' + ${item.id} + '&amount=1' }">-</a>
 	                                                        <span th:text="${item.amount}">1</span>
-															<a class="btn btn-primary" th:href="@{'/cart/increment?id=' + ${item.id} + '&amount=1' }">+</a>
+															<a class="btn btn-primary" th:href="@{'/cart/increment?id=' + ${item.id} + '&amount=1' }">+</a> -->
+															<form th:action="@{/cart/update/amount}"  method="get">
+																<input style="width:30px;"  type="hidden" name="id" th:value="${item.productId}"/>
+																<input style="width:30px; margin-bottom:15px; " name="amount" th:value="${item.amount}"/>
+																<button class="btn btn-primary" type="submit">Cập nhật</button>
+															</form>
+															<!-- <span th:text="${item.amount}">1</span>
+															<p>
+																<a class="btn btn-primary" th:href="@{'/cart/update/amount?id=' + ${item.id} + '&amount=1' }">Cập nhật số lượng</a>
+															</p> -->
 	                                                    </div>
 	                                                    <div class="col-md-4 price">
 	                                                        <span th:text="${item.onSalePrice}">11,400,000 VND</span>
+	                                                        <p><span>Tổng :</span><span th:text="${item.lineTotal}"></span></p>
+	                                                       
 	                                                    </div>
 	                                                </div>
 	                                            </div>
@@ -52,7 +63,7 @@
 	                                    </div>
 	                                </div>
 	                                <div class="remove">
-	                                    <p><a th:href="@{${'/cart/remove?id=' + item.id}}" class="text-muted"><i class="fa fa-trash"></i></a></p>
+	                                    <p><a th:href="@{${'/cart/remove?id=' + item.productId}}" class="text-muted"><i class="fa fa-trash"></i></a></p>
 	                                </div>
 	                                <hr>
                                </th:block>

@@ -59,7 +59,7 @@ public class User {
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
-    private Cart cart;
+    	private Cart cart;
 	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JsonIgnore

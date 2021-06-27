@@ -2,8 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	
+	>
 <head>
+
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">SpringBootThymeleaf</title>
@@ -59,9 +62,11 @@
                 
                 <ul class="navbar-nav ml-auto">
                 	<th:block sec:authorize="isAuthenticated()">
-                	 	<li class="nav-item">
-                        	<a class="nav-link" th:href="@{/admin/product?page=1&categoryName=Máy quạt&sortField=onSalePrice&sortDir=lowest}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Quản lý </a>
-                   		</li>
+                		<th:block sec:access="hasAnyRole('ADMIN', 'MODERATOR')">
+	                	 	<li class="nav-item">
+	                        	<a class="nav-link" th:href="@{/admin/product?page=1&categoryName=Máy quạt&sortField=onSalePrice&sortDir=lowest}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Quản lý </a>
+	                   		</li>
+                   		</th:block>.
                 		 <li class="nav-item">
                         	<a class="nav-link" th:href="@{/logout}" style="text-size-adjust: 10pt;"><i class="fa fa-fw fa-user"></i> Đăng xuất </a>
                    		</li>

@@ -1,6 +1,7 @@
 package com.ecommerce.model.response;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import com.ecommerce.model.dto.OrderDetailDto;
 
@@ -9,7 +10,7 @@ import lombok.Data;
 @Data
 public class OrderResponse {
 	
-	private Integer id;
+	private Long id;
 	
 	private String shipName;
 	
@@ -22,6 +23,10 @@ public class OrderResponse {
 	private String street;
 	
 	private String shipAddrees;
+	
+	private Float totalPrice;
+	
+	private LocalDate createDate;
 	
     private List<OrderDetailDto> orderDetailList;
 }
